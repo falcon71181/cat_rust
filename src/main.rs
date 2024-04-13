@@ -24,6 +24,12 @@ impl Default for FileConfig {
     }
 }
 
+// print version
+fn print_version(file: &FileConfig) {
+    println!("Version of program : {}", file.version);
+    exit(1);
+}
+
 fn main() {
     // grab all the arguments from the command
     let mut args: Vec<String> = env::args().collect();
@@ -36,5 +42,27 @@ fn main() {
         exit(1);
     }
 
-    println!("{:?}", args);
+    // implementing default configurations
+    let mut file_conf: FileConfig = FileConfig::default();
+
+    // WARN: clone is not best practise
+    // TODO: replace clone in future
+    // last argument is filepath
+    let file_name: Option<String> = args.last().cloned();
+
+    // WARN: clone is not best practise
+    // TODO: replace clone in future
+    file_conf.file = file_name.clone();
+
+    // help
+    if args.contains(&"-h".to_string()) || args.contains(&"--help".to_string()) {
+        // TODO: make a help guide
+        exit(1);
+    }
+
+    // version
+    if args.contains(&"-v".to_string()) || args.contains(&"--Version".to_string()) {
+        print_version(&file_conf);
+        exit(1);
+    }
 }
