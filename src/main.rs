@@ -1,4 +1,6 @@
 use std::env;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 use std::process::exit;
 
 // File Structure along with all arguments
@@ -28,6 +30,13 @@ impl Default for FileConfig {
 fn print_version(file: &FileConfig) {
     println!("Version of program : {}", file.version);
     exit(1);
+}
+
+// print file data
+fn cat(file: &mut dyn BufRead) {
+    for line in file.lines() {
+        println!("{}", line.unwrap());
+    }
 }
 
 fn main() {
@@ -64,5 +73,17 @@ fn main() {
     if args.contains(&"-v".to_string()) || args.contains(&"--Version".to_string()) {
         print_version(&file_conf);
         exit(1);
+    }
+
+    // error handling
+    match File::open(file_name.unwrap()) {
+        Ok(file) => {
+            let mut input = BufReader::new(file);
+            //TODO: Check read permissions
+            cat(&mut input);
+        }
+        Err(_) => {
+            println!("No such file or directory.");
+        }
     }
 }
