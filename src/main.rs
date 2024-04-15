@@ -66,6 +66,16 @@ fn main() {
     // help
     if args.contains(&"-h".to_string()) || args.contains(&"--help".to_string()) {
         // TODO: make a help guide
+        println!(
+            r###"
+Usage: cat_rust [options...] file_path
+ -n, --numbers               TODO: Not Yet Made
+ -h, --help                  Get help for commands
+ -v, -V, --version           Show version number and quit
+
+ This program was just made to learn Rust.
+"###
+        );
         exit(1);
     }
 
@@ -87,3 +97,5 @@ fn main() {
         }
     }
 }
+
+// TODO: make test cases
