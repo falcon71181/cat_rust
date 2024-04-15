@@ -80,7 +80,10 @@ Usage: cat_rust [options...] file_path
     }
 
     // version
-    if args.contains(&"-v".to_string()) || args.contains(&"--Version".to_string()) {
+    if args.contains(&"-v".to_string())
+        || args.contains(&"-V".to_string())
+        || args.contains(&"--Version".to_string())
+    {
         print_version(&file_conf);
         exit(1);
     }
